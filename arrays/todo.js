@@ -1,12 +1,12 @@
 let todos = [{
    name: "quickbooks review",
-   completed: false
+   completed: true
 }, {
    name: "reconcile YNAB",
    completed: false
 }, {
    name: "take out trash",
-   completed: true
+   completed: false
 }, {
    name: "cook dinner",
    completed: true
@@ -15,17 +15,29 @@ let todos = [{
    completed: false
 }];
 
+// let sortTodos = function (todoList, )
 
-let findTodo =
-});
+console.log(todos.sort(function (a, b) {
+   return a.completed - b.completed;
+}));
 
 let removeTodo = function (todoList, text) {
-   let name = todoList.findIndex(function (todo) {
+   let index = todoList.findIndex(function (todo) {
       return todo.name.includes(text);
+   });
+   todoList.splice(index, 1);
+   console.log(todoList);
+};
+
+// removeTodo(todos, "cook dinner");
+
+let getThingsTodo = function (todoList) {
+   return todoList.filter(function (todo) {
+      return !todo.completed
    });
 };
 
-remove
+console.log(getThingsTodo(todos));
 
 
 
