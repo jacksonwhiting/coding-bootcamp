@@ -6,7 +6,7 @@
 <html>
 
 <head>
-   <meta charset="utf-8">
+   <meta charsest="utf-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <title></title>
    <meta name="description" content="">
@@ -16,11 +16,19 @@
 
 <body>
    <h1>Begginer Todo App</h1>
-   <p id="mow">Mow Lawn</p>
-   <p>YNAB Reconcile</p>
-   <p>Fix Dinner</p>
-   <p>Take Boys' to Basketbll</p>
-   <p>Finish Coding Challenge</p>
+   <div id="summaryStatement"></div>
+   <input type="text" id="filterInput" placeholder="Filter Todos">
+
+   <div id="todoList"></div>
+   <form>
+      <input type="text" id="todoInput" placeholder="New Todo Here">
+      <button id="createTodo"> Create Todo </button>
+      <input type="checkbox" id="checkFilter" value="true">
+      <label for="checkFilter"> Remove Completed</label><br>
+   </form>
+
+   <script src="https://unpkg.com/uuid@latest/dist/umd/uuidv4.min.js"></script>
+   <script src="notes-functions.js" async defer></script>
    <script src="app.js" async defer></script>
 </body>
 
