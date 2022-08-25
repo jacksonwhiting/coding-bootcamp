@@ -1,10 +1,14 @@
-const notes = getSavedNotes()
+let notes = getSavedNotes();
 
-const filters = {
-    searchText: ''
-}
+let filters = {
+    searchText: '',
+    sortedNotes: 'byEdited'
+};
 
 renderNotes(notes, filters)
+
+const timestamp = moment().valueOf();
+console.log(timestamp);
 
 document.querySelector('#create-note').addEventListener('click', function (e) {
     const id = uuidv4()
@@ -12,7 +16,9 @@ document.querySelector('#create-note').addEventListener('click', function (e) {
     notes.push({
         id: id,
         title: '',
-        body: ''
+        body: '',
+        createdAt: timestamp,
+        updatedAt: timestamp
     })
     saveNotes(notes)
     location.assign(`/edit.html#${id}`)
@@ -24,5 +30,16 @@ document.querySelector('#search-text').addEventListener('input', function (e) {
 })
 
 document.querySelector('#filter-by').addEventListener('change', function (e) {
-    console.log(e.target.value)
+    filters.sortedNotes = e.target.value;
+    renderNotes(notes, filters);
 })
+
+window.addEventListener('storage', e => {
+    if (e.key === 'notes') {
+        notes = JSON.parse(e.newValue);
+        renderNotes(notes, filters);
+    }
+})
+
+
+console.log(notes);
