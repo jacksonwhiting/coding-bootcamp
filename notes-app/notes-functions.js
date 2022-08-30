@@ -2,11 +2,13 @@
 const getSavedNotes = function () {
     const notesJSON = localStorage.getItem('notes')
 
-    if (notesJSON !== null) {
-        return JSON.parse(notesJSON)
-    } else {
-        return []
-    }
+    return notesJSON != null ? JSON.parse(notesJSON) : [];
+
+    // if (notesJSON !== null) {
+    //     return JSON.parse(notesJSON)
+    // } else {
+    //     return []
+    // }
 }
 
 // Save the notes to localStorage
@@ -16,9 +18,7 @@ const saveNotes = function (notes) {
 
 // Remove a note from the list
 const removeNote = function (id) {
-    const noteIndex = notes.findIndex(function (note) {
-        return note.id === id
-    })
+    const noteIndex = notes.findIndex((note) => note.id === id)
 
     if (noteIndex > -1) {
         notes.splice(noteIndex, 1)
@@ -26,7 +26,7 @@ const removeNote = function (id) {
 }
 
 // Generate the DOM structure for a note
-const generateNoteDOM = function (note) {
+const generateNoteDOM = (note) => {
     const noteEl = document.createElement('div')
     const textEl = document.createElement('a')
     const button = document.createElement('button')
@@ -53,7 +53,7 @@ const generateNoteDOM = function (note) {
 }
 
 //Sort notes by select dropdown
-let sortNotes = function (notes, sortBy) {
+let sortNotes = (notes, sortBy) => {
     if (sortBy === 'byEdited') {
         return notes.sort((a, b) => {
             return b.updatedAt - a.updatedAt;
@@ -91,7 +91,7 @@ let sortNotes = function (notes, sortBy) {
 }
 
 // Render application notes
-const renderNotes = function (notes, filters) {
+const renderNotes = (notes, filters) => {
     notes = sortNotes(notes, filters.sortedNotes);
     const filteredNotes = notes.filter(function (note) {
         return note.title.toLowerCase().includes(filters.searchText.toLowerCase())
@@ -99,7 +99,7 @@ const renderNotes = function (notes, filters) {
 
     document.querySelector('#notes').innerHTML = ''
 
-    filteredNotes.forEach(function (note) {
+    filteredNotes.forEach((note) => {
         const noteEl = generateNoteDOM(note)
         document.querySelector('#notes').appendChild(noteEl)
     })

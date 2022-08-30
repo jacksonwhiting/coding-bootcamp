@@ -6,9 +6,7 @@ const noteId = location.hash.substring(1)
 
 let notes = getSavedNotes()
 
-let note = notes.find(function (note) {
-    return note.id === noteId
-})
+let note = notes.find((note) => note.id === noteId)
 
 if (note === undefined) {
     location.assign('/index.html')
@@ -38,7 +36,7 @@ removeElement.addEventListener('click', e => {
     location.assign('/index.html');
 })
 
-window.addEventListener('storage', function (e) {
+window.addEventListener('storage', (e) => {
     console.log('something changed');
     console.log(e.newValue);
     if (e.key === 'notes') {
