@@ -7,8 +7,13 @@
 // Number: myNumber --> Number.prototype --> Object.prototype --> null
 // Boolean: myBoolean --> Boolean.prototype --> Object.prototype --> null
 
-const product = 'Computer'
-console.log(product)
+window.addEventListener('keypress', function (e) {
+   // const guess = String.fromCharCode(e.charCode)
+   const guess = e.key
+   game1.makeGuess(guess)
+   game1.getPuzzle()
+})
 
-const otherProduct = new String('Phone')
-console.log(otherProduct)
+const game1 = new Hangman('Cat', 2)
+
+game1.getPuzzle()

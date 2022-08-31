@@ -4,6 +4,9 @@ const Hangman = function (word, remainingGuesses) {
     this.guessedLetters = []
 }
 
+let wordInBrowser = document.querySelector("#hangmanWord")
+let remainingGuessesBrowser = document.querySelector("#guessesLeft")
+
 Hangman.prototype.getPuzzle = function () {
     let puzzle = ''
 
@@ -15,7 +18,8 @@ Hangman.prototype.getPuzzle = function () {
         }
     })
 
-    return puzzle
+    wordInBrowser.textContent = puzzle;
+    remainingGuessesBrowser.textContent = `Remaining Guesses: ${this.remainingGuesses}`
 }
 
 Hangman.prototype.makeGuess = function (guess) {
@@ -31,16 +35,3 @@ Hangman.prototype.makeGuess = function (guess) {
         this.remainingGuesses--
     }
 }
-
-const game1 = new Hangman('Cat', 2)
-
-console.log(game1.getPuzzle())
-console.log(game1.remainingGuesses)
-
-window.addEventListener('keypress', function (e) {
-    // const guess = String.fromCharCode(e.charCode)
-    const guess = e.key
-    game1.makeGuess(guess)
-    console.log(game1.getPuzzle())
-    console.log(game1.remainingGuesses)
-})
