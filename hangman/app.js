@@ -11,6 +11,7 @@ window.addEventListener('keypress', function (e) {
    // const guess = String.fromCharCode(e.charCode)
    const guess = e.key
    game1.makeGuess(guess)
+   console.log(game1.getStatus())
    game1.getPuzzle()
 })
 

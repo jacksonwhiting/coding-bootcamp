@@ -2,6 +2,7 @@ const Hangman = function (word, remainingGuesses) {
     this.word = word.toLowerCase().split('')
     this.remainingGuesses = remainingGuesses
     this.guessedLetters = []
+    this.status = "playing"
 }
 
 let wordInBrowser = document.querySelector("#hangmanWord")
@@ -19,7 +20,30 @@ Hangman.prototype.getPuzzle = function () {
     })
 
     wordInBrowser.textContent = puzzle;
-    remainingGuessesBrowser.textContent = `Remaining Guesses: ${this.remainingGuesses}`
+    remainingGuessesBrowser.textContent = this.getStatus();
+}
+
+let missingLetters = (word, guessedLetters, remainingGuesses) => {
+    let stillPlaying = false
+
+    word.forEach((item) => {
+        if (!guessedLetters.includes(item) && remainingGuesses >= 0) {
+            stillPlaying = true
+        }
+    })
+
+    return stillPlaying
+    return stillPlaying;
+}
+
+Hangman.prototype.calculateStatus = function () {
+    if (this.remainingGuesses <= 0) {
+        this.status = "failed"
+    } else if (missingLetters(this.word, this.guessedLetters, this.remainingGuesses)) {
+        this.status = "playing"
+    } else {
+        this.status = "finished"
+    };
 }
 
 Hangman.prototype.makeGuess = function (guess) {
@@ -27,11 +51,26 @@ Hangman.prototype.makeGuess = function (guess) {
     const isUnique = !this.guessedLetters.includes(guess)
     const isBadGuess = !this.word.includes(guess)
 
-    if (isUnique) {
-        this.guessedLetters.push(guess)
+    if (this.status === "playing") {
+        if (isUnique && !isBadGuess) {
+            this.guessedLetters.push(guess)
+            this.calculateStatus()
+        } else if (isUnique && isBadGuess) {
+            this.guessedLetters.push(guess)
+            this.remainingGuesses--
+            this.calculateStatus()
+        } else {
+            console.log(`You already guessed the letter ${guess}.`)
+        }
     }
+}
 
-    if (isUnique && isBadGuess) {
-        this.remainingGuesses--
-    }
+Hangman.prototype.getStatus = function () {
+    if (this.status === "playing") {
+        return `You have ${this.remainingGuesses} guesses remaining.`
+    } else if (this.status === "failed") {
+        return `Nice try, the word was "${this.word.join("")}"`
+    } else {
+        return 'Great work, you guessed the word'
+    };
 }
